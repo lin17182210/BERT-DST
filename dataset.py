@@ -1,5 +1,5 @@
-import json
 import numpy as np
+
 
 class Turn:
     def __init__(self, turn_id, transcript, turn_label, belief_state, system_acts, system_transcript, asr=None, num=None):
@@ -25,6 +25,7 @@ class Turn:
     def from_dict(cls, d):
         return cls(**d)
 
+
 class Dialogue:
     def __init__(self, dialogue_id, turns):
         self.id = dialogue_id
@@ -40,6 +41,7 @@ class Dialogue:
     @classmethod
     def from_dict(cls, d):
         return cls(d['dialogue_id'], [Turn.from_dict(t) for t in d['turns']])
+
 
 class Dataset:
     def __init__(self, dialogues):
@@ -89,6 +91,7 @@ class Dataset:
                 joint_goal.append(gold_recovered == pred_recovered)
                 i += 1
         return {'turn_inform': np.mean(inform), 'turn_request': np.mean(request), 'joint_goal': np.mean(joint_goal)}
+
 
 class Ontology:
     def __init__(self, slots=None, values=None, num=None):

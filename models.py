@@ -17,12 +17,15 @@ from pytorch_pretrained_bert import BertTokenizer, BertForSequenceClassification
 CLS = '[CLS]'
 SEP = '[SEP]'
 
+
 # Generate examples for a turn
 def turn_to_examples(t, ontology, tokenizer):
     examples = []
     user_transcript = t.transcript
-    if isinstance(user_transcript, list): user_transcript = ' '.join(user_transcript)
-    if len(t.asr) > 0: user_transcript = t.asr[0][0]
+    if isinstance(user_transcript, list):
+        user_transcript = ' '.join(user_transcript)
+    if len(t.asr) > 0:
+        user_transcript = t.asr[0][0]
     context = ' '.join([t.system_transcript] + [SEP] + [user_transcript])
     turn_label = set([(s, v) for s, v in t.turn_label])
     for slot in ontology.slots:
@@ -45,6 +48,7 @@ def turn_to_examples(t, ontology, tokenizer):
             # Update examples list
             examples.append((slot, value, input_ids, token_type_ids, label))
     return examples
+
 
 class Model(nn.Module):
     def __init__(self, tokenizer, bert):
@@ -85,7 +89,7 @@ class Model(nn.Module):
         optimizer_grouped_parameters = [
             {'params': [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)], 'weight_decay': 0.01},
             {'params': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
-            ]
+        ]
         self.optimizer = BertAdam(optimizer_grouped_parameters,
                                   lr=args.learning_rate,
                                   warmup=args.warmup_proportion,
@@ -134,7 +138,7 @@ class Model(nn.Module):
                 iterations += 1
 
                 # Next training batch
-                batch = train_examples[i:i+batch_size]
+                batch = train_examples[i:i + batch_size]
                 _, _, input_ids, token_type_ids, labels = list(zip(*batch))
 
                 # Padding and Convert to Torch Tensors
@@ -181,7 +185,7 @@ class Model(nn.Module):
         preds = []
         examples = turn_to_examples(turn, ontology, tokenizer)
         for i in range(0, len(examples), batch_size):
-            batch = examples[i:i+batch_size]
+            batch = examples[i:i + batch_size]
             slots, values, input_ids, token_type_ids, _ = list(zip(*batch))
 
             # Padding and Convert to Torch Tensors

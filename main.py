@@ -7,6 +7,7 @@ from pathlib import Path
 from utils import create_dir_if_not_exists, read_json, get_n_params
 from dataset import Dataset, Ontology
 
+
 def create_parser():
     # Creates a parser for command-line arguments.
     parser = argparse.ArgumentParser()
@@ -31,6 +32,7 @@ def create_parser():
     parser.add_argument('--do_eval', action='store_true', help='Whether to run evaluation.')
 
     return parser
+
 
 def load_dataset(base_path):
     dataset = {}
@@ -88,8 +90,8 @@ def main(opts):
 
         # Start evaluating
         print('Start Evaluating', flush=True)
-        print(model.run_dev(dataset, ontology, opts),flush=True)
-        print(model.run_test(dataset, ontology, opts),flush=True)
+        print(model.run_dev(dataset, ontology, opts), flush=True)
+        print(model.run_test(dataset, ontology, opts), flush=True)
 
 
 if __name__ == '__main__':
