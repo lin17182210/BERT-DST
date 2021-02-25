@@ -5,6 +5,7 @@ The code has been tested with Python 3 and PyTorch 1.5.0. Note that the code in 
 ## Commands
 An example training command (using BERT-Base) is:
 `python main.py --do_train --data_dir=data/woz/ --bert_model=bert-base-uncased --output_dir=outputs`
+`python main.py --do_train --data_dir=data/woz/ --bert_model=distilbert-base-uncased --output_dir=outputs`
 
 An example training command (using BERT-Large) is:
 `python main.py --do_train --data_dir=data/woz/ --bert_model=bert-large-uncased --output_dir=outputs`

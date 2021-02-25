@@ -6,8 +6,7 @@ from tqdm import tqdm
 from utils import RunningAverage, rindex, pad
 
 from torch import nn
-from torch import optim
-from torch.nn import functional as F
+
 
 from pytorch_pretrained_bert.optimization import BertAdam
 from pytorch_pretrained_bert.file_utils import WEIGHTS_NAME, CONFIG_NAME
